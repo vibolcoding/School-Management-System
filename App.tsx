@@ -5,7 +5,9 @@ import DashboardView from './views/DashboardView';
 import StaffManagementView from './views/StaffManagementView';
 import StudentManagementView from './views/StudentManagementView';
 import CourseManagementView from './views/CourseManagementView';
+import ELibraryView from './views/ELibraryView';
 import AttendanceView from './views/AttendanceView';
+import ReportsView from './views/ReportsView';
 import PlaceholderView from './views/PlaceholderView';
 import type { ViewType } from './types';
 
@@ -23,10 +25,12 @@ const App: React.FC = () => {
         return <StudentManagementView />;
       case 'Courses':
         return <CourseManagementView />;
+      case 'E-Library':
+        return <ELibraryView />;
       case 'Attendance':
         return <AttendanceView />;
       case 'Reports':
-        return <PlaceholderView title="Reporting" />;
+        return <ReportsView />;
       case 'Settings':
         return <PlaceholderView title="System Settings" />;
       default:

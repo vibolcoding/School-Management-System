@@ -1,5 +1,5 @@
-import type { StaffMember, Student, Course, AttendanceRecord } from './types';
-import { Role, Department, AttendanceStatus } from './types';
+import type { StaffMember, Student, Course, AttendanceRecord, LibraryResource } from './types';
+import { Role, Department, AttendanceStatus, ResourceType } from './types';
 
 export const MOCK_STAFF_DATA: StaffMember[] = [
   {
@@ -165,4 +165,17 @@ export const MOCK_ATTENDANCE_DATA: AttendanceRecord[] = [
   { id: 'ATT010', studentId: 'STU002', courseId: 'C104', date: yesterdayString, status: AttendanceStatus.PRESENT },
   { id: 'ATT011', studentId: 'STU004', courseId: 'C105', date: yesterdayString, status: AttendanceStatus.ABSENT },
   { id: 'ATT012', studentId: 'STU004', courseId: 'C102', date: yesterdayString, status: AttendanceStatus.PRESENT },
+];
+
+export const MOCK_E_LIBRARY_DATA: LibraryResource[] = [
+  { id: 'LIB001', title: 'The Principles of Quantum Mechanics', author: 'P. A. M. Dirac', type: ResourceType.BOOK, coverImage: 'https://picsum.photos/seed/LIB001/300/400', publicationYear: 1930, department: Department.SCIENCE, isAvailable: true },
+  { id: 'LIB002', title: 'A Brief History of Time', author: 'Stephen Hawking', type: ResourceType.BOOK, coverImage: 'https://picsum.photos/seed/LIB002/300/400', publicationYear: 1988, department: Department.SCIENCE, isAvailable: false },
+  { id: 'LIB003', title: 'Calculus: Early Transcendentals', author: 'James Stewart', type: ResourceType.BOOK, coverImage: 'https://picsum.photos/seed/LIB003/300/400', publicationYear: 2015, department: Department.MATHEMATICS, isAvailable: true },
+  { id: 'LIB004', title: 'Journal of the American Mathematical Society', author: 'Various', type: ResourceType.JOURNAL, coverImage: 'https://picsum.photos/seed/LIB004/300/400', publicationYear: 2023, department: Department.MATHEMATICS, isAvailable: true },
+  { id: 'LIB005', title: 'The Elements of Style', author: 'William Strunk Jr.', type: ResourceType.BOOK, coverImage: 'https://picsum.photos/seed/LIB005/300/400', publicationYear: 1918, department: Department.ARTS, isAvailable: true },
+  { id: 'LIB006', title: 'Hamlet', author: 'William Shakespeare', type: ResourceType.BOOK, coverImage: 'https://picsum.photos/seed/LIB006/300/400', publicationYear: 1603, department: Department.ARTS, isAvailable: false },
+  { id: 'LIB007', title: 'Art in America', author: 'Various', type: ResourceType.JOURNAL, coverImage: 'https://picsum.photos/seed/LIB007/300/400', publicationYear: 2023, department: Department.ARTS, isAvailable: true },
+  { id: 'LIB008', title: 'The Art of Computer Programming', author: 'Donald Knuth', type: ResourceType.BOOK, coverImage: 'https://picsum.photos/seed/LIB008/300/400', publicationYear: 1968, department: Department.SCIENCE, isAvailable: true },
+  { id: 'LIB009', title: 'Nature Chemistry', author: 'Various', type: ResourceType.JOURNAL, coverImage: 'https://picsum.photos/seed/LIB009/300/400', publicationYear: 2024, department: Department.SCIENCE, isAvailable: true },
+  { id: 'LIB010', title: 'The History of the Ancient World', author: 'Susan Wise Bauer', type: ResourceType.BOOK, coverImage: 'https://picsum.photos/seed/LIB010/300/400', publicationYear: 2007, department: Department.ARTS, isAvailable: false },
 ];

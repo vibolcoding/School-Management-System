@@ -7,6 +7,7 @@ import LibraryIcon from './icons/LibraryIcon';
 import CalendarIcon from './icons/CalendarIcon';
 import ChartBarIcon from './icons/ChartBarIcon';
 import CogIcon from './icons/CogIcon';
+import BookOpenIcon from './icons/BookOpenIcon';
 
 interface SidebarProps {
   currentView: ViewType;
@@ -51,6 +52,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, isOpen, 
     { label: 'Staff', icon: <BriefcaseIcon /> },
     { label: 'Students', icon: <UsersIcon /> },
     { label: 'Courses', icon: <LibraryIcon /> },
+    { label: 'E-Library', icon: <BookOpenIcon /> },
     { label: 'Attendance', icon: <CalendarIcon /> },
     { label: 'Reports', icon: <ChartBarIcon /> },
   ];

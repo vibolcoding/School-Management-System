@@ -1,4 +1,4 @@
-export type ViewType = 'Dashboard' | 'Staff' | 'Students' | 'Courses' | 'Attendance' | 'Reports' | 'Settings';
+export type ViewType = 'Dashboard' | 'Staff' | 'Students' | 'Courses' | 'E-Library' | 'Attendance' | 'Reports' | 'Settings';
 
 export enum Role {
   ADMINISTRATOR = 'Administrator',
@@ -54,4 +54,20 @@ export interface AttendanceRecord {
   courseId: string;
   date: string; // YYYY-MM-DD format
   status: AttendanceStatus;
+}
+
+export enum ResourceType {
+  BOOK = 'Book',
+  JOURNAL = 'Journal',
+}
+
+export interface LibraryResource {
+  id: string;
+  title: string;
+  author: string;
+  type: ResourceType;
+  coverImage: string;
+  publicationYear: number;
+  department: Department;
+  isAvailable: boolean;
 }
