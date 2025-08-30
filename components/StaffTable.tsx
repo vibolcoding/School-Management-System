@@ -29,26 +29,36 @@ const StaffTable: React.FC<StaffTableProps> = ({ staff, onAddStaffClick, onEditC
 
   const filteredStaff = useMemo(() => {
     return staff.filter(member => {
-      const matchesSearch = member.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                            member.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            member.position.toLowerCase().includes(searchTerm.toLowerCase());
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      const matchesSearch = member.name.toLowerCase().includes(lowerCaseSearchTerm) || 
+                            member.email.toLowerCase().includes(lowerCaseSearchTerm) ||
+                            member.position.toLowerCase().includes(lowerCaseSearchTerm) ||
+                            member.id.toLowerCase().includes(lowerCaseSearchTerm);
       const matchesDepartment = departmentFilter === 'All' || member.department === departmentFilter;
       const matchesStatus = statusFilter === 'All' || member.status === statusFilter;
       return matchesSearch && matchesDepartment && matchesStatus;
     });
   }, [staff, searchTerm, departmentFilter, statusFilter]);
+
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setDepartmentFilter('All');
+    setStatusFilter('All');
+  };
+
+  const areFiltersActive = searchTerm !== '' || departmentFilter !== 'All' || statusFilter !== 'All';
   
   return (
     <div className="bg-white p-6 rounded-xl shadow-md">
        <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
         <h2 className="text-xl font-semibold text-slate-800">Staff Members</h2>
-        <div className="w-full md:w-auto flex flex-col md:flex-row items-center gap-2">
+        <div className="w-full md:w-auto flex flex-col md:flex-row flex-wrap items-center justify-end gap-2">
             <input
               type="text"
-              placeholder="Search staff..."
+              placeholder="Search by name, email, ID..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full md:w-48 px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full md:w-64 px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
             <select
                 value={departmentFilter}
@@ -68,6 +78,15 @@ const StaffTable: React.FC<StaffTableProps> = ({ staff, onAddStaffClick, onEditC
                 <option value="On Leave">On Leave</option>
                 <option value="Inactive">Inactive</option>
             </select>
+            {areFiltersActive && (
+              <button
+                onClick={handleClearFilters}
+                className="w-full md:w-auto px-4 py-2 border border-slate-300 rounded-md text-sm font-semibold bg-white text-slate-700 hover:bg-slate-50 transition"
+                aria-label="Clear all filters"
+              >
+                Clear Filters
+              </button>
+            )}
             <button onClick={onAddStaffClick} className="w-full md:w-auto bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition">
               Add Staff
             </button>

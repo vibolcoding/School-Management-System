@@ -1,15 +1,87 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import AttendanceTable from '../components/AttendanceTable';
-import { MOCK_ATTENDANCE_DATA, MOCK_COURSES, MOCK_STUDENT_DATA } from '../constants';
-import type { AttendanceRecord, Course } from '../types';
-import { Department, AttendanceStatus } from '../types';
+import QRCodeGeneratorModal from '../components/QRCodeGeneratorModal';
+import { MOCK_ATTENDANCE_DATA, MOCK_COURSES, MOCK_STUDENT_DATA, eventEmitter, StudentCheckInPayload } from '../constants';
+import type { AttendanceRecord, Course, Student } from '../types';
+import { Department, AttendanceStatus, Role } from '../types';
+import { useUser } from '../context/UserContext';
+
+const FACULTY_ID = 'S001'; // Mock current faculty user
 
 const AttendanceView: React.FC = () => {
+  const { currentUserRole } = useUser();
   const [attendanceRecords, setAttendanceRecords] = useState<AttendanceRecord[]>(MOCK_ATTENDANCE_DATA);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [departmentFilter, setDepartmentFilter] = useState<string>('All');
   const [courseFilter, setCourseFilter] = useState<string>('All');
   const [statusFilter, setStatusFilter] = useState<string>('All');
+
+  const [isQrModalOpen, setIsQrModalOpen] = useState(false);
+  const [selectedCourseForQr, setSelectedCourseForQr] = useState<Course | null>(null);
+  const [qrCourseSelection, setQrCourseSelection] = useState<string>('');
+  const [liveCheckedInStudents, setLiveCheckedInStudents] = useState<Student[]>([]);
+  
+  const canGenerateQr = currentUserRole === Role.FACULTY || currentUserRole === Role.ADMINISTRATOR;
+
+  useEffect(() => {
+    const handleCheckIn = (data: StudentCheckInPayload) => {
+        if (isQrModalOpen && data.course.id === selectedCourseForQr?.id) {
+            setLiveCheckedInStudents(prev => {
+                if (prev.some(s => s.id === data.student.id)) {
+                    return prev;
+                }
+                return [...prev, data.student].sort((a,b) => a.name.localeCompare(b.name));
+            });
+        }
+    };
+    
+    eventEmitter.subscribe<StudentCheckInPayload>('studentCheckedIn', handleCheckIn);
+
+    return () => {
+        eventEmitter.unsubscribe<StudentCheckInPayload>('studentCheckedIn', handleCheckIn);
+    };
+  }, [isQrModalOpen, selectedCourseForQr]);
+
+
+  // For QR generation, faculty can only select their own courses
+  const myCourses = useMemo(() => {
+    if (currentUserRole === Role.ADMINISTRATOR) return MOCK_COURSES;
+    if (currentUserRole === Role.FACULTY) {
+      return MOCK_COURSES.filter(c => c.teacherId === FACULTY_ID);
+    }
+    return [];
+  }, [currentUserRole]);
+
+  const handleCourseSelectionForQr = (courseId: string) => {
+    setQrCourseSelection(courseId);
+
+    if (!courseId) {
+      setIsQrModalOpen(false);
+      setSelectedCourseForQr(null);
+      return;
+    }
+
+    const course = MOCK_COURSES.find(c => c.id === courseId);
+    if (course) {
+      setLiveCheckedInStudents([]); // Reset for new session
+      setSelectedCourseForQr(course);
+      setIsQrModalOpen(true);
+    }
+  };
+  
+  const handleCloseQrModal = () => {
+    setIsQrModalOpen(false);
+    setSelectedCourseForQr(null);
+    setQrCourseSelection(''); // Reset dropdown to placeholder
+  };
+
+  const totalStudentsInCourse = useMemo(() => {
+    if (!selectedCourseForQr) return 0;
+    return MOCK_STUDENT_DATA.filter(student => 
+      student.courses.some(course => course.id === selectedCourseForQr.id)
+    ).length;
+  }, [selectedCourseForQr]);
+
 
   const handleStatusChange = (recordId: string, newStatus: AttendanceStatus) => {
     setAttendanceRecords(prevRecords =>
@@ -47,14 +119,15 @@ const AttendanceView: React.FC = () => {
           department: course.department,
         };
       })
-      .filter(record => {
+      .filter((record): record is Exclude<typeof record, null> => {
         if (!record) return false;
         const matchesDate = record.date === selectedDate;
         const matchesDept = departmentFilter === 'All' || record.department === departmentFilter;
         const matchesCourse = courseFilter === 'All' || record.courseId === courseFilter;
         const matchesStatus = statusFilter === 'All' || record.status === statusFilter;
         return matchesDate && matchesDept && matchesCourse && matchesStatus;
-      });
+      })
+      .sort((a,b) => a.studentName.localeCompare(b.studentName));
   }, [attendanceRecords, selectedDate, departmentFilter, courseFilter, statusFilter]);
 
   return (
@@ -62,7 +135,31 @@ const AttendanceView: React.FC = () => {
       <h1 className="text-3xl font-bold text-slate-800">Attendance Tracking</h1>
       <p className="text-slate-500">Monitor and manage student attendance records for daily classes.</p>
 
-      <div className="bg-white p-4 rounded-xl shadow-md">
+      {canGenerateQr && (
+          <div className="bg-white p-4 rounded-xl shadow-md">
+              <label htmlFor="qr-course-select" className="font-semibold text-slate-800 mb-2 block">
+                Start Live QR Session
+              </label>
+              <p className="text-sm text-slate-500 mb-3">Select a course to instantly generate a time-limited QR code for attendance.</p>
+              <select
+                id="qr-course-select"
+                value={qrCourseSelection}
+                onChange={(e) => handleCourseSelectionForQr(e.target.value)}
+                className="w-full sm:max-w-md px-3 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
+                aria-label="Select a course to start a QR session"
+                disabled={myCourses.length === 0}
+              >
+                  <option value="" disabled>Select a course...</option>
+                  {myCourses.length > 0 ? (
+                      myCourses.map(course => <option key={course.id} value={course.id}>{course.name}</option>)
+                  ) : (
+                      <option disabled>No courses assigned</option>
+                  )}
+              </select>
+          </div>
+      )}
+
+      <div className="bg-white p-4 rounded-xl shadow-md sticky top-0 z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
             <label htmlFor="date-filter" className="block text-sm font-medium text-slate-700 mb-1">Date</label>
@@ -117,6 +214,14 @@ const AttendanceView: React.FC = () => {
       <AttendanceTable
         records={displayData}
         onStatusChange={handleStatusChange}
+      />
+
+      <QRCodeGeneratorModal
+        isOpen={isQrModalOpen}
+        onClose={handleCloseQrModal}
+        course={selectedCourseForQr}
+        checkedInStudents={liveCheckedInStudents}
+        totalStudents={totalStudentsInCourse}
       />
     </div>
   );

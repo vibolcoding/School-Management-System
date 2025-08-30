@@ -1,4 +1,4 @@
-export type ViewType = 'Dashboard' | 'Staff' | 'Students' | 'Courses' | 'E-Library' | 'Attendance' | 'Reports' | 'Settings';
+export type ViewType = 'Dashboard' | 'Staff' | 'Students' | 'Courses' | 'E-Library' | 'Attendance' | 'Reports' | 'Leave' | 'Settings' | 'Scan QR' | 'Assignments' | 'Course Analytics' | 'Student Performance';
 
 export enum Role {
   ADMINISTRATOR = 'Administrator',
@@ -31,6 +31,7 @@ export interface Course {
   id: string;
   name: string;
   department: Department;
+  teacherId?: string;
 }
 
 export interface Student {
@@ -69,5 +70,56 @@ export interface LibraryResource {
   coverImage: string;
   publicationYear: number;
   department: Department;
+  description: string;
   isAvailable: boolean;
+  borrowedBy?: string; // studentId
+}
+
+export enum LeaveType {
+  ANNUAL = 'Annual Leave',
+  SICK = 'Sick Leave',
+  SPECIAL = 'Special Leave',
+  MISSION = 'Mission',
+}
+
+export enum LeaveRequestStatus {
+  PENDING = 'Pending',
+  APPROVED = 'Approved',
+  REJECTED = 'Rejected',
+}
+
+export interface LeaveRequest {
+  id: string;
+  staffId: string;
+  staffName: string;
+  leaveType: LeaveType;
+  startDate: string; // YYYY-MM-DD
+  endDate: string; // YYYY-MM-DD
+  reason: string;
+  status: LeaveRequestStatus;
+  requestDate: string; // YYYY-MM-DD
+}
+
+export interface Assignment {
+  id: string;
+  courseId: string;
+  title: string;
+  description: string;
+  dueDate: string; // YYYY-MM-DD
+}
+
+export enum SubmissionStatus {
+  PENDING = 'Pending',
+  SUBMITTED = 'Submitted',
+  LATE = 'Late',
+  GRADED = 'Graded',
+}
+
+export interface Submission {
+  id: string;
+  assignmentId: string;
+  studentId: string;
+  submissionDate: string | null; // YYYY-MM-DD or null if not submitted
+  status: SubmissionStatus;
+  grade: number | null; // e.g., 85
 }

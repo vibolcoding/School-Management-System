@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { ViewType } from '../types';
+import { Role } from '../types';
+import { ROLE_NAV_ITEMS } from '../constants';
 import HomeIcon from './icons/HomeIcon';
 import BriefcaseIcon from './icons/BriefcaseIcon';
 import UsersIcon from './icons/UsersIcon';
@@ -8,12 +10,18 @@ import CalendarIcon from './icons/CalendarIcon';
 import ChartBarIcon from './icons/ChartBarIcon';
 import CogIcon from './icons/CogIcon';
 import BookOpenIcon from './icons/BookOpenIcon';
+import PlaneIcon from './icons/PlaneIcon';
+import QrcodeIcon from './icons/QrcodeIcon';
+import ClipboardListIcon from './icons/ClipboardListIcon';
+import PresentationChartLineIcon from './icons/PresentationChartLineIcon';
+import TrendingUpIcon from './icons/TrendingUpIcon';
 
 interface SidebarProps {
   currentView: ViewType;
   setCurrentView: (view: ViewType) => void;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  currentUserRole: Role;
 }
 
 const NavLink: React.FC<{
@@ -46,16 +54,28 @@ const NavLink: React.FC<{
   </li>
 );
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, isOpen, setIsOpen }) => {
-  const navItems: { label: ViewType; icon: React.ReactNode }[] = [
+const ALL_NAV_ITEMS: { label: ViewType; icon: React.ReactNode }[] = [
     { label: 'Dashboard', icon: <HomeIcon /> },
     { label: 'Staff', icon: <BriefcaseIcon /> },
     { label: 'Students', icon: <UsersIcon /> },
     { label: 'Courses', icon: <LibraryIcon /> },
+    { label: 'Assignments', icon: <ClipboardListIcon /> },
+    { label: 'Course Analytics', icon: <PresentationChartLineIcon /> },
+    { label: 'Student Performance', icon: <TrendingUpIcon /> },
     { label: 'E-Library', icon: <BookOpenIcon /> },
     { label: 'Attendance', icon: <CalendarIcon /> },
+    { label: 'Leave', icon: <PlaneIcon /> },
+    { label: 'Scan QR', icon: <QrcodeIcon /> },
     { label: 'Reports', icon: <ChartBarIcon /> },
-  ];
+];
+
+const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, isOpen, setIsOpen, currentUserRole }) => {
+
+  const navItems = useMemo(() => {
+    const allowedViews = ROLE_NAV_ITEMS[currentUserRole] || [];
+    return ALL_NAV_ITEMS.filter(item => allowedViews.includes(item.label));
+  }, [currentUserRole]);
+
 
   const isCollapsed = !isOpen;
 
