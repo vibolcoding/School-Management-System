@@ -84,7 +84,10 @@ const ReportsView: React.FC = () => {
     setSummary(null);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+      if (!process.env.NEXT_PUBLIC_API_KEY) {
+          throw new Error("API key is not configured.");
+      }
+      const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_API_KEY });
       
       const reportData = {
           totalEnrolledStudents: totalEnrolled,
@@ -115,9 +118,9 @@ const ReportsView: React.FC = () => {
 
       setSummary(response.text);
 
-    } catch (err) {
+    } catch (err: any) {
         console.error("Error generating AI summary:", err);
-        setError("An unexpected error occurred while generating the summary. Please check your API key and network connection.");
+        setError(err.message || "An unexpected error occurred. Please check your API key and network connection.");
     } finally {
         setIsLoading(false);
     }

@@ -18,16 +18,16 @@ import ClipboardListIcon from './icons/ClipboardListIcon';
 import PresentationChartLineIcon from './icons/PresentationChartLineIcon';
 import TrendingUpIcon from './icons/TrendingUpIcon';
 
-// FIX: Update SidebarProps to accept view state and setters from App.tsx
+// FIX: Update props to support state-based navigation from App.tsx
 interface SidebarProps {
-  currentView: ViewType;
-  setCurrentView: (view: ViewType) => void;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   currentUserRole: Role;
+  currentView: ViewType;
+  setCurrentView: (view: ViewType) => void;
 }
 
-// FIX: NavLink now determines its active state via a prop and uses a simple `<a>` tag with an onClick handler for navigation.
+// FIX: Refactor NavLink to be a button with an onClick handler for state-based navigation
 const NavLink: React.FC<{
   icon: React.ReactNode;
   label: ViewType;
@@ -37,14 +37,13 @@ const NavLink: React.FC<{
 }> = ({ icon, label, isCollapsed, isActive, onClick }) => {
     return (
         <li>
-            <a
-            href="#"
-            onClick={(e) => { e.preventDefault(); onClick(); }}
-            className={`flex items-center p-3 my-1 rounded-lg transition-colors duration-200 ${
-                isActive
-                ? 'bg-blue-600 text-white shadow-md'
-                : 'text-slate-200 hover:bg-blue-800 hover:text-white'
-            }`}
+            <button
+                onClick={onClick}
+                className={`flex items-center p-3 my-1 rounded-lg transition-colors duration-200 w-full text-left ${
+                    isActive
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'text-slate-200 hover:bg-blue-800 hover:text-white'
+                }`}
             >
             {icon}
             <span
@@ -52,7 +51,7 @@ const NavLink: React.FC<{
             >
                 {label}
             </span>
-            </a>
+            </button>
         </li>
     );
 };
@@ -72,22 +71,13 @@ const ALL_NAV_ITEMS: { label: ViewType; icon: React.ReactNode }[] = [
     { label: 'Reports', icon: <ChartBarIcon /> },
 ];
 
-// FIX: Sidebar now receives `currentView` and `setCurrentView` and passes them down correctly.
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, isOpen, setIsOpen, currentUserRole }) => {
-
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen, currentUserRole, currentView, setCurrentView }) => {
   const navItems = useMemo(() => {
     const allowedViews = ROLE_NAV_ITEMS[currentUserRole] || [];
     return ALL_NAV_ITEMS.filter(item => allowedViews.includes(item.label));
   }, [currentUserRole]);
 
   const isCollapsed = !isOpen;
-  
-  const handleLinkClick = (view: ViewType) => {
-    setCurrentView(view);
-    if (window.innerWidth < 768) {
-        setIsOpen(false);
-    }
-  };
 
   return (
     <>
@@ -117,9 +107,9 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, isOpen, 
                 key={item.label}
                 icon={item.icon}
                 label={item.label}
-                onClick={() => handleLinkClick(item.label)}
-                isCollapsed={isCollapsed}
                 isActive={currentView === item.label}
+                onClick={() => setCurrentView(item.label)}
+                isCollapsed={isCollapsed}
               />
             ))}
           </ul>
@@ -129,9 +119,9 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, isOpen, 
              <NavLink
                 icon={<CogIcon />}
                 label="Settings"
-                onClick={() => handleLinkClick('Settings')}
-                isCollapsed={isCollapsed}
                 isActive={currentView === 'Settings'}
+                onClick={() => setCurrentView('Settings')}
+                isCollapsed={isCollapsed}
               />
            </ul>
         </div>

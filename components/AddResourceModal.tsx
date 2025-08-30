@@ -11,7 +11,7 @@ interface AddResourceModalProps {
   resourceToEdit?: LibraryResource | null;
 }
 
-const initialFormState = {
+const initialFormState: Omit<LibraryResource, 'id' | 'isAvailable' | 'borrowedBy'> = {
   title: '',
   author: '',
   type: ResourceType.BOOK,
@@ -22,7 +22,7 @@ const initialFormState = {
 };
 
 const AddResourceModal: React.FC<AddResourceModalProps> = ({ isOpen, onClose, onSaveResource, resourceToEdit }) => {
-  const [formData, setFormData] = useState<Omit<LibraryResource, 'id' | 'isAvailable' | 'borrowedBy'>>(initialFormState);
+  const [formData, setFormData] = useState(initialFormState);
   const [errors, setErrors] = useState<Partial<typeof formData>>({});
   
   const isEditMode = !!resourceToEdit;
@@ -73,21 +73,24 @@ const AddResourceModal: React.FC<AddResourceModalProps> = ({ isOpen, onClose, on
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      // FIX: The `formData` state is correctly typed, so it can be passed directly.
-      // The previous implementation with spreading and re-converting the number was causing a type conflict.
       onSaveResource(formData);
     }
   };
 
+  // FIX: Correctly handle type conversion for the 'publicationYear' number field
+  // and improve type safety for other fields.
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (name === 'publicationYear') {
-      // FIX: Ensure `publicationYear` is always stored as a number in the state.
-      setFormData(prev => ({ ...prev, publicationYear: value ? parseInt(value, 10) : 0 }));
+        const year = parseInt(value, 10);
+        // If parsing fails (e.g., empty or invalid string), it will result in NaN.
+        // Revert to the previous value in state to prevent invalid data.
+        setFormData(prev => ({ ...prev, publicationYear: isNaN(year) ? prev.publicationYear : year }));
     } else {
-      setFormData(prev => ({ ...prev, [name]: value as any }));
+      setFormData(prev => ({ ...prev, [name]: value }));
     }
   };
+
 
   if (!isOpen) return null;
 

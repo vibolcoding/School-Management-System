@@ -6,8 +6,6 @@ import { useUser } from '@/context/UserContext';
 
 interface HeaderProps {
   toggleSidebar: () => void;
-  currentUserRole: Role;
-  setCurrentUserRole: (role: Role) => void;
 }
 
 const userProfiles = {
@@ -18,7 +16,8 @@ const userProfiles = {
 };
 
 
-const Header: React.FC<HeaderProps> = ({ toggleSidebar, currentUserRole, setCurrentUserRole }) => {
+const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
+  const { currentUserRole, setCurrentUserRole } = useUser();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
 

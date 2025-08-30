@@ -98,10 +98,9 @@ const App: React.FC = () => {
           currentUserRole={currentUserRole}
         />
         <div className="flex-1 flex flex-col overflow-hidden">
+          {/* FIX: Removed redundant props that are handled by UserContext in the Header component. */}
           <Header 
             toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
-            currentUserRole={currentUserRole}
-            setCurrentUserRole={setCurrentUserRole}
           />
           <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-100 p-4 md:p-6 lg:p-8">
             {renderView()}
