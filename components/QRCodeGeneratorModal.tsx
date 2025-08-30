@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import QRCode from 'qrcode';
-import type { Course, Student } from '../types';
+import type { Course, Student } from '@/lib/types';
 
 interface QRCodeGeneratorModalProps {
   isOpen: boolean;
@@ -52,8 +54,8 @@ const QRCodeGeneratorModal: React.FC<QRCodeGeneratorModalProps> = ({ isOpen, onC
   const seconds = timeLeft % 60;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4 transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="qr-modal-title">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-sm text-center transform transition-all duration-300 scale-95 opacity-0 animate-fade-in-scale">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4" role="dialog" aria-modal="true" aria-labelledby="qr-modal-title">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-sm text-center animate-fade-in-scale">
         <div className="p-6 border-b">
           <div className="flex justify-between items-center">
             <h2 id="qr-modal-title" className="text-xl font-bold text-slate-800">
@@ -120,21 +122,6 @@ const QRCodeGeneratorModal: React.FC<QRCodeGeneratorModalProps> = ({ isOpen, onC
             </button>
         </div>
       </div>
-       <style>{`
-          @keyframes fade-in-scale {
-            from {
-              transform: scale(.95);
-              opacity: 0;
-            }
-            to {
-              transform: scale(1);
-              opacity: 1;
-            }
-          }
-          .animate-fade-in-scale {
-            animation: fade-in-scale 0.2s ease-out forwards;
-          }
-      `}</style>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -86,7 +87,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <UserContext.Provider value={{ currentUserRole }}>
+    // FIX: Pass both `currentUserRole` and `setCurrentUserRole` to the context provider.
+    <UserContext.Provider value={{ currentUserRole, setCurrentUserRole }}>
       <div className="flex h-screen bg-slate-100">
         <Sidebar 
           currentView={currentView} 

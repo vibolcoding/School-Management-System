@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useState, FormEvent, useEffect } from 'react';
-import type { StaffMember } from '../types';
-import { Department, Role } from '../types';
+import type { StaffMember } from '@/lib/types';
+import { Department, Role } from '@/lib/types';
 
 interface AddStaffModalProps {
   isOpen: boolean;
@@ -77,8 +79,8 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onSaveSt
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4 transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="add-staff-modal-title">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-full overflow-y-auto transform transition-all duration-300 scale-95 opacity-0 animate-fade-in-scale">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4" role="dialog" aria-modal="true" aria-labelledby="add-staff-modal-title">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-full overflow-y-auto animate-fade-in-scale">
         <div className="p-6 border-b">
           <div className="flex justify-between items-center">
             <h2 id="add-staff-modal-title" className="text-xl font-bold text-slate-800">
@@ -149,21 +151,6 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose, onSaveSt
           </div>
         </form>
       </div>
-       <style>{`
-          @keyframes fade-in-scale {
-            from {
-              transform: scale(.95);
-              opacity: 0;
-            }
-            to {
-              transform: scale(1);
-              opacity: 1;
-            }
-          }
-          .animate-fade-in-scale {
-            animation: fade-in-scale 0.2s ease-out forwards;
-          }
-      `}</style>
     </div>
   );
 };

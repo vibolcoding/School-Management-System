@@ -1,17 +1,19 @@
+'use client';
+
 import React, { useMemo, useState } from 'react';
 import {
   BarChart, Bar, PieChart, Pie, Cell, LineChart, Line,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
-import { MOCK_STUDENT_DATA, MOCK_STAFF_DATA, MOCK_ATTENDANCE_DATA, MOCK_COURSES } from '../constants';
-import { Department, Role, AttendanceStatus } from '../types';
-import DashboardCard from '../components/DashboardCard';
-import UsersIcon from '../components/icons/UsersIcon';
-import BriefcaseIcon from '../components/icons/BriefcaseIcon';
-import LibraryIcon from '../components/icons/LibraryIcon';
-import ChartBarIcon from '../components/icons/ChartBarIcon';
+import { MOCK_STUDENT_DATA, MOCK_STAFF_DATA, MOCK_ATTENDANCE_DATA, MOCK_COURSES } from '@/lib/constants';
+import { Department, Role, AttendanceStatus } from '@/lib/types';
+import DashboardCard from '@/components/DashboardCard';
+import UsersIcon from '@/components/icons/UsersIcon';
+import BriefcaseIcon from '@/components/icons/BriefcaseIcon';
+import LibraryIcon from '@/components/icons/LibraryIcon';
+import ChartBarIcon from '@/components/icons/ChartBarIcon';
 import { GoogleGenAI } from '@google/genai';
-import AISummaryCard from '../components/AISummaryCard';
+import AISummaryCard from '@/components/AISummaryCard';
 
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
@@ -82,7 +84,7 @@ const ReportsView: React.FC = () => {
     setSummary(null);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
       
       const reportData = {
           totalEnrolledStudents: totalEnrolled,

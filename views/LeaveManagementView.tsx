@@ -1,11 +1,13 @@
+'use client';
+
 import React, { useState } from 'react';
-import LeaveRequestTable from '../components/LeaveRequestTable';
-import RequestLeaveModal from '../components/RequestLeaveModal';
-import ConfirmationModal from '../components/ConfirmationModal';
-import { MOCK_LEAVE_REQUESTS, MOCK_STAFF_DATA } from '../constants';
-import type { LeaveRequest } from '../types';
-import { LeaveRequestStatus, Role } from '../types';
-import { useUser } from '../context/UserContext';
+import LeaveRequestTable from '@/components/LeaveRequestTable';
+import RequestLeaveModal from '@/components/RequestLeaveModal';
+import ConfirmationModal from '@/components/ConfirmationModal';
+import { MOCK_LEAVE_REQUESTS, MOCK_STAFF_DATA } from '@/lib/constants';
+import type { LeaveRequest } from '@/lib/types';
+import { LeaveRequestStatus, Role } from '@/lib/types';
+import { useUser } from '@/context/UserContext';
 
 type ConfirmationInfo = {
   action: 'approve' | 'reject';

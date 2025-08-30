@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
-import type { Course } from '../types';
-import { Department } from '../types';
+import type { Course } from '@/lib/types';
+import { Department } from '@/lib/types';
 
 interface CourseTableProps {
   courses: Course[];

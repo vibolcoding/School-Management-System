@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useState, FormEvent, useEffect, useRef } from 'react';
-import type { Student } from '../types';
-import { MOCK_COURSES } from '../constants';
+import type { Student } from '@/lib/types';
+import { MOCK_COURSES } from '@/lib/constants';
 
 interface AddStudentModalProps {
   isOpen: boolean;
@@ -102,8 +104,8 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ isOpen, onClose, onSa
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4 transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="add-student-modal-title">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-full overflow-y-auto transform transition-all duration-300 scale-95 opacity-0 animate-fade-in-scale">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4" role="dialog" aria-modal="true" aria-labelledby="add-student-modal-title">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-full overflow-y-auto animate-fade-in-scale">
         <div className="p-6 border-b">
           <div className="flex justify-between items-center">
             <h2 id="add-student-modal-title" className="text-xl font-bold text-slate-800">
@@ -234,21 +236,6 @@ const AddStudentModal: React.FC<AddStudentModalProps> = ({ isOpen, onClose, onSa
           </div>
         </form>
       </div>
-       <style>{`
-          @keyframes fade-in-scale {
-            from {
-              transform: scale(.95);
-              opacity: 0;
-            }
-            to {
-              transform: scale(1);
-              opacity: 1;
-            }
-          }
-          .animate-fade-in-scale {
-            animation: fade-in-scale 0.2s ease-out forwards;
-          }
-      `}</style>
     </div>
   );
 };

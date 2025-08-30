@@ -1,9 +1,11 @@
+'use client';
+
 import React, { useState } from 'react';
-import CourseTable from '../components/CourseTable';
-import AddCourseModal from '../components/AddCourseModal';
-import ConfirmationModal from '../components/ConfirmationModal';
-import { MOCK_COURSES, MOCK_STUDENT_DATA } from '../constants';
-import type { Course } from '../types';
+import CourseTable from '@/components/CourseTable';
+import AddCourseModal from '@/components/AddCourseModal';
+import ConfirmationModal from '@/components/ConfirmationModal';
+import { MOCK_COURSES, MOCK_STUDENT_DATA } from '@/lib/constants';
+import type { Course } from '@/lib/types';
 
 const CourseManagementView: React.FC = () => {
   const [courseList, setCourseList] = useState<Course[]>(MOCK_COURSES);

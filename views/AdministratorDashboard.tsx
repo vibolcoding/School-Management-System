@@ -1,10 +1,12 @@
+'use client';
+
 import React from 'react';
-import DashboardCard from '../components/DashboardCard';
-import UsersIcon from '../components/icons/UsersIcon';
-import BriefcaseIcon from '../components/icons/BriefcaseIcon';
-import CalendarIcon from '../components/icons/CalendarIcon';
-import ChartBarIcon from '../components/icons/ChartBarIcon';
-import { MOCK_STAFF_DATA, MOCK_STUDENT_DATA } from '../constants';
+import DashboardCard from '@/components/DashboardCard';
+import UsersIcon from '@/components/icons/UsersIcon';
+import BriefcaseIcon from '@/components/icons/BriefcaseIcon';
+import CalendarIcon from '@/components/icons/CalendarIcon';
+import ChartBarIcon from '@/components/icons/ChartBarIcon';
+import { MOCK_STAFF_DATA, MOCK_STUDENT_DATA } from '@/lib/constants';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const attendanceData = [
@@ -65,15 +67,6 @@ const AdministratorDashboard: React.FC = () => {
           </ul>
         </div>
       </div>
-       <style>{`
-          @keyframes fade-in {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          .animate-fade-in {
-            animation: fade-in 0.5s ease-out forwards;
-          }
-      `}</style>
     </div>
   );
 };

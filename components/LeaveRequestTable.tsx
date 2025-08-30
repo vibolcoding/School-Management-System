@@ -1,7 +1,8 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
-// FIX: 'Role' was imported as a type-only import, which prevents its use as a value (e.g., Role.ADMINISTRATOR). This changes the import to correctly handle Role as a value.
-import type { LeaveRequest } from '../types';
-import { LeaveRequestStatus, LeaveType, Role } from '../types';
+import type { LeaveRequest } from '@/lib/types';
+import { LeaveRequestStatus, LeaveType, Role } from '@/lib/types';
 
 interface LeaveRequestTableProps {
   requests: LeaveRequest[];

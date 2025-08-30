@@ -1,10 +1,12 @@
+'use client';
+
 import React, { useState, useMemo, useEffect } from 'react';
-import AttendanceTable from '../components/AttendanceTable';
-import QRCodeGeneratorModal from '../components/QRCodeGeneratorModal';
-import { MOCK_ATTENDANCE_DATA, MOCK_COURSES, MOCK_STUDENT_DATA, eventEmitter, StudentCheckInPayload } from '../constants';
-import type { AttendanceRecord, Course, Student } from '../types';
-import { Department, AttendanceStatus, Role } from '../types';
-import { useUser } from '../context/UserContext';
+import AttendanceTable from '@/components/AttendanceTable';
+import QRCodeGeneratorModal from '@/components/QRCodeGeneratorModal';
+import { MOCK_ATTENDANCE_DATA, MOCK_COURSES, MOCK_STUDENT_DATA, eventEmitter, StudentCheckInPayload } from '@/lib/constants';
+import type { AttendanceRecord, Course, Student } from '@/lib/types';
+import { Department, AttendanceStatus, Role } from '@/lib/types';
+import { useUser } from '@/context/UserContext';
 
 const FACULTY_ID = 'S001'; // Mock current faculty user
 

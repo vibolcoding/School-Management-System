@@ -1,8 +1,10 @@
+'use client';
+
 import React, { useState } from 'react';
-import StaffTable from '../components/StaffTable';
-import AddStaffModal from '../components/AddStaffModal';
-import { MOCK_STAFF_DATA } from '../constants';
-import type { StaffMember } from '../types';
+import StaffTable from '@/components/StaffTable';
+import AddStaffModal from '@/components/AddStaffModal';
+import { MOCK_STAFF_DATA } from '@/lib/constants';
+import type { StaffMember } from '@/lib/types';
 
 const StaffManagementView: React.FC = () => {
   const [staffList, setStaffList] = useState<StaffMember[]>(MOCK_STAFF_DATA);

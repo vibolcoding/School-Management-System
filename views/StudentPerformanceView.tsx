@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
-import { MOCK_COURSES, MOCK_STUDENT_DATA, MOCK_ATTENDANCE_DATA } from '../constants';
-import { AttendanceStatus, Student } from '../types';
+import { MOCK_COURSES, MOCK_STUDENT_DATA, MOCK_ATTENDANCE_DATA } from '@/lib/constants';
+import { AttendanceStatus, Student } from '@/lib/types';
 
 const FACULTY_ID = 'S001'; // Mock faculty user: Dr. Evelyn Reed
 
@@ -153,17 +155,6 @@ const StudentPerformanceView: React.FC = () => {
                 </div>
 
             </div>
-            <style>
-            {`
-                @keyframes fade-in {
-                    from { opacity: 0; transform: translateY(10px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                .animate-fade-in {
-                    animation: fade-in 0.5s ease-out forwards;
-                }
-            `}
-            </style>
         </div>
     );
 };

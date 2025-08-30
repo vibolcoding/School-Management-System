@@ -1,9 +1,11 @@
+'use client';
+
 import React, { useMemo } from 'react';
-import DashboardCard from '../components/DashboardCard';
-import UsersIcon from '../components/icons/UsersIcon';
-import BriefcaseIcon from '../components/icons/BriefcaseIcon';
-import { MOCK_STAFF_DATA } from '../constants';
-import { Department } from '../types';
+import DashboardCard from '@/components/DashboardCard';
+import UsersIcon from '@/components/icons/UsersIcon';
+import BriefcaseIcon from '@/components/icons/BriefcaseIcon';
+import { MOCK_STAFF_DATA } from '@/lib/constants';
+import { Department } from '@/lib/types';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
@@ -71,15 +73,6 @@ const HRDashboard: React.FC = () => {
           </ResponsiveContainer>
         </div>
       </div>
-      <style>{`
-          @keyframes fade-in {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          .animate-fade-in {
-            animation: fade-in 0.5s ease-out forwards;
-          }
-      `}</style>
     </div>
   );
 };

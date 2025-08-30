@@ -1,6 +1,8 @@
+'use client';
 
 import React, { useState } from 'react';
-import { Role } from '../types';
+import { Role } from '@/lib/types';
+import { useUser } from '@/context/UserContext';
 
 interface HeaderProps {
   toggleSidebar: () => void;

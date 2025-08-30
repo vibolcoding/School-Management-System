@@ -1,10 +1,12 @@
+'use client';
+
 import React, { useMemo } from 'react';
-import DashboardCard from '../components/DashboardCard';
-import UsersIcon from '../components/icons/UsersIcon';
-import BookOpenIcon from '../components/icons/BookOpenIcon';
-import ChartBarIcon from '../components/icons/ChartBarIcon';
-import { MOCK_STUDENT_DATA, MOCK_ATTENDANCE_DATA, MOCK_E_LIBRARY_DATA } from '../constants';
-import { AttendanceStatus } from '../types';
+import DashboardCard from '@/components/DashboardCard';
+import UsersIcon from '@/components/icons/UsersIcon';
+import BookOpenIcon from '@/components/icons/BookOpenIcon';
+import ChartBarIcon from '@/components/icons/ChartBarIcon';
+import { MOCK_STUDENT_DATA, MOCK_ATTENDANCE_DATA, MOCK_E_LIBRARY_DATA } from '@/lib/constants';
+import { AttendanceStatus } from '@/lib/types';
 
 const STUDENT_ID = 'STU001'; // Alice Johnson
 
@@ -73,15 +75,6 @@ const StudentDashboard: React.FC = () => {
             )}
         </div>
       </div>
-      <style>{`
-          @keyframes fade-in {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          .animate-fade-in {
-            animation: fade-in 0.5s ease-out forwards;
-          }
-      `}</style>
     </div>
   );
 };

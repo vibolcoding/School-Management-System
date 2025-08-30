@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState, FormEvent, useEffect } from 'react';
-import type { Assignment, Course } from '../types';
+import type { Assignment, Course } from '@/lib/types';
 
 interface AddAssignmentModalProps {
   isOpen: boolean;
@@ -68,8 +70,8 @@ const AddAssignmentModal: React.FC<AddAssignmentModalProps> = ({ isOpen, onClose
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4 transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="add-assignment-modal-title">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-full overflow-y-auto transform transition-all duration-300 scale-95 opacity-0 animate-fade-in-scale">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4" role="dialog" aria-modal="true" aria-labelledby="add-assignment-modal-title">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-full overflow-y-auto animate-fade-in-scale">
         <div className="p-6 border-b">
           <div className="flex justify-between items-center">
             <h2 id="add-assignment-modal-title" className="text-xl font-bold text-slate-800">
@@ -118,21 +120,6 @@ const AddAssignmentModal: React.FC<AddAssignmentModalProps> = ({ isOpen, onClose
           </div>
         </form>
       </div>
-       <style>{`
-          @keyframes fade-in-scale {
-            from {
-              transform: scale(.95);
-              opacity: 0;
-            }
-            to {
-              transform: scale(1);
-              opacity: 1;
-            }
-          }
-          .animate-fade-in-scale {
-            animation: fade-in-scale 0.2s ease-out forwards;
-          }
-      `}</style>
     </div>
   );
 };

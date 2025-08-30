@@ -1,11 +1,13 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
-import { useUser } from '../context/UserContext';
-import { Role, SubmissionStatus } from '../types';
-import type { Assignment, Submission, Course } from '../types';
-import { MOCK_COURSES, MOCK_ASSIGNMENTS, MOCK_SUBMISSIONS, MOCK_STUDENT_DATA } from '../constants';
-import PlaceholderView from './PlaceholderView';
-import AddAssignmentModal from '../components/AddAssignmentModal';
-import SubmissionDetailView from '../components/SubmissionDetailView';
+import { useUser } from '@/context/UserContext';
+import { Role, SubmissionStatus } from '@/lib/types';
+import type { Assignment, Submission, Course } from '@/lib/types';
+import { MOCK_COURSES, MOCK_ASSIGNMENTS, MOCK_SUBMISSIONS, MOCK_STUDENT_DATA } from '@/lib/constants';
+import PlaceholderView from '@/views/PlaceholderView';
+import AddAssignmentModal from '@/components/AddAssignmentModal';
+import SubmissionDetailView from '@/components/SubmissionDetailView';
 
 // Mock IDs for current users
 const FACULTY_ID = 'S001'; // Dr. Evelyn Reed
@@ -222,15 +224,6 @@ const FacultyAssignments: React.FC = () => {
                 courses={myCourses}
                 assignmentToEdit={editingAssignment}
             />
-             <style>{`
-              @keyframes fade-in {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
-              }
-              .animate-fade-in {
-                animation: fade-in 0.5s ease-out forwards;
-              }
-            `}</style>
         </div>
     );
 };
@@ -340,15 +333,6 @@ const StudentAssignments: React.FC = () => {
                     </div>
                 )}
             </div>
-             <style>{`
-              @keyframes fade-in {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
-              }
-              .animate-fade-in {
-                animation: fade-in 0.5s ease-out forwards;
-              }
-            `}</style>
         </div>
     );
 };

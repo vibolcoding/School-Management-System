@@ -1,8 +1,10 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import QRCodeScanner from '../components/QRCodeScanner';
-import { useUser } from '../context/UserContext';
-import { MOCK_ATTENDANCE_DATA, MOCK_COURSES, MOCK_STUDENT_DATA, eventEmitter, StudentCheckInPayload } from '../constants';
-import { Role, AttendanceStatus } from '../types';
+import QRCodeScanner from '@/components/QRCodeScanner';
+import { useUser } from '@/context/UserContext';
+import { MOCK_ATTENDANCE_DATA, MOCK_COURSES, MOCK_STUDENT_DATA, eventEmitter, StudentCheckInPayload } from '@/lib/constants';
+import { Role, AttendanceStatus } from '@/lib/types';
 
 const STUDENT_ID = 'STU001'; // Mock current student (Alice)
 const QR_CODE_VALIDITY_MS = 120 * 1000; // 2 minutes, should match generator

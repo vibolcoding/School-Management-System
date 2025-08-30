@@ -1,8 +1,10 @@
+'use client';
+
 import React, { useState } from 'react';
-import StudentTable from '../components/StudentTable';
-import AddStudentModal from '../components/AddStudentModal';
-import { MOCK_STUDENT_DATA } from '../constants';
-import type { Student } from '../types';
+import StudentTable from '@/components/StudentTable';
+import AddStudentModal from '@/components/AddStudentModal';
+import { MOCK_STUDENT_DATA } from '@/lib/constants';
+import type { Student } from '@/lib/types';
 
 const StudentManagementView: React.FC = () => {
   const [studentList, setStudentList] = useState<Student[]>(MOCK_STUDENT_DATA);

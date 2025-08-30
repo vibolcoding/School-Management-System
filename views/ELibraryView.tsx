@@ -1,11 +1,13 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
-import { MOCK_E_LIBRARY_DATA } from '../constants';
-import type { LibraryResource } from '../types';
-import { Department, ResourceType } from '../types';
-import ELibraryGrid from '../components/ELibraryGrid';
-import ResourceDetailModal from '../components/ResourceDetailModal';
-import AddResourceModal from '../components/AddResourceModal';
-import ConfirmationModal from '../components/ConfirmationModal';
+import { MOCK_E_LIBRARY_DATA } from '@/lib/constants';
+import type { LibraryResource } from '@/lib/types';
+import { Department, ResourceType } from '@/lib/types';
+import ELibraryGrid from '@/components/ELibraryGrid';
+import ResourceDetailModal from '@/components/ResourceDetailModal';
+import AddResourceModal from '@/components/AddResourceModal';
+import ConfirmationModal from '@/components/ConfirmationModal';
 
 
 const ELibraryView: React.FC = () => {

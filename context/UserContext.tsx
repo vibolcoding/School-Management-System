@@ -1,8 +1,9 @@
-import React, { createContext, useContext } from 'react';
-import { Role } from '../types';
+import { createContext, useContext, Dispatch, SetStateAction } from 'react';
+import { Role } from '@/lib/types';
 
 interface UserContextType {
   currentUserRole: Role;
+  setCurrentUserRole: Dispatch<SetStateAction<Role>>;
 }
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
